@@ -13,7 +13,7 @@ pub fn something<T>(value T) Maybe<T> {
 
 pub fn nothing<T>() Maybe<T> {
 	return Maybe<T>{
-		value: unsafe { voidptr(0) },
+		value: unsafe { nil },
 	}
 }
 
@@ -23,7 +23,7 @@ pub fn (mut o Maybe<T>) something(value T) Maybe<T> {
 }
 
 pub fn (mut o Maybe<T>) nothing() Maybe<T> {
-	o.value = unsafe { voidptr(0) }
+	o.value = unsafe { nil }
 	return o
 }
 

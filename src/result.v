@@ -14,26 +14,26 @@ mut:
 pub fn ok<T>(value T) Result<T> {
 	return Result<T> {
 		value: &value,
-		err:   unsafe { voidptr(0) },
+		err:   unsafe { nil },
 	}
 }
 
 pub fn err<T>(err string) Result<T> {
 	e := SomeError { msg: err }
 	return Result<T> {
-		value: unsafe { voidptr(0) },
+		value: unsafe { nil },
 		err:   &e,
 	}
 }
 
 pub fn (mut r Result<T>) ok(value T) Result<T> {
 	r.value = &value
-	r.err = unsafe { voidptr(0) }
+	r.err = unsafe { nil }
 	return r
 }
 
 pub fn (mut r Result<T>) err(err string) Result<T> {
-	r.value = unsafe { voidptr(0) }
+	r.value = unsafe { nil }
 	r.err = &SomeError { msg: err }
 	return r
 }
@@ -46,8 +46,12 @@ pub fn (r &Result<T>) is_err() bool {
 	return !isnil(r.err)
 }
 
-pub fn (r &Result<T>) throw() ? {
-	return error(r.err.msg)
+pub fn (r &Result<T>) unwrap_err() string {
+	if isnil(r.err.msg) {
+		panic("can't unwrap non-error value")
+	}
+
+	return r.err.msg
 }
 
 pub fn (o &Result<T>) unwrap() &T {
