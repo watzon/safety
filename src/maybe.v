@@ -6,14 +6,13 @@ mut:
 }
 
 pub fn something<T>(value T) Maybe<T> {
-	return Maybe<T> {
-		value: &value,
+	return Maybe<T>{
+		value: &value
 	}
 }
 
 pub fn nothing<T>() Maybe<T> {
-	return Maybe<T>{
-	}
+	return Maybe<T>{}
 }
 
 pub fn (mut o Maybe<T>) something(value T) Maybe<T> {
