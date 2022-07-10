@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout V
+        uses: actions/checkout@v2
+        with:
+          repository: vlang/v
+      - name: Checkout the safety module
+        uses: actions/checkout@v2
+        with:
+          path: safety
+      - name: Build V
+        run: make && ./v symlink -githubci
+      - name: Ensure the module files are formatted
+        run: |
+          cd safety
+          v fmt -verify .
+      - name: Test the safety module
+        run: |
+          cd safety
+          v test .
