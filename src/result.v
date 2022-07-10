@@ -7,21 +7,19 @@ mut:
 
 pub struct Result<T> {
 mut:
-	err   &SomeError
-	value &T
+	err   &SomeError = unsafe{ &SomeError(nil) }
+	value &T = unsafe { &T(nil) }
 }
 
 pub fn ok<T>(value T) Result<T> {
 	return Result<T> {
 		value: &value,
-		err:   unsafe { nil },
 	}
 }
 
 pub fn err<T>(err string) Result<T> {
 	e := SomeError { msg: err }
 	return Result<T> {
-		value: unsafe { nil },
 		err:   &e,
 	}
 }
@@ -31,7 +29,6 @@ pub fn (mut r Result<T>) ok(value T) Result<T> {
 	r.err = unsafe { nil }
 	return r
 }
-
 pub fn (mut r Result<T>) err(err string) Result<T> {
 	r.value = unsafe { nil }
 	r.err = &SomeError { msg: err }

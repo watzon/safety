@@ -2,7 +2,7 @@ module safety
 
 pub struct Maybe<T> {
 mut:
-	value &T
+	value &T = unsafe { &T(nil) }
 }
 
 pub fn something<T>(value T) Maybe<T> {
@@ -13,7 +13,6 @@ pub fn something<T>(value T) Maybe<T> {
 
 pub fn nothing<T>() Maybe<T> {
 	return Maybe<T>{
-		value: unsafe { nil },
 	}
 }
 
