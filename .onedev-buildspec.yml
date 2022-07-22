@@ -1,0 +1,22 @@
+version: 17
+jobs:
+- name: Push to Github
+  jobExecutor: root-executor
+  steps:
+  - !PushRepository
+    name: Github
+    remoteUrl: https://github.com/watzon/safety.git
+    userName: watzon
+    passwordSecret: access-token
+    withLfs: false
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  - !TagCreateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 250
+  memoryRequirement: 256
+  timeout: 3600
