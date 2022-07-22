@@ -1,0 +1,8 @@
+{
+    "name": "safety",
+    "version": "1.0.0",
+    "author": ["Your Author Name <author@example.com>"],
+    "repo": "https://github.com/<your-username>/<your-repo>",
+    "test_files": [],
+    "dependencies": []
+}
