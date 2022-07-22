@@ -20,3 +20,21 @@ jobs:
   cpuRequirement: 250
   memoryRequirement: 256
   timeout: 3600
+- name: Pull from Github
+  jobExecutor: root-executor
+  steps:
+  - !PullRepository
+    name: Pull from Github
+    remoteUrl: https://github.com/watzon/safety.git
+    userName: watzon
+    passwordSecret: access-token
+    refs: refs/heads/* refs/tags/*
+    withLfs: false
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 250
+  memoryRequirement: 256
+  timeout: 3600
